@@ -6,15 +6,32 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 /** 
  * Textures 
  */
-const image = new Image()
-const texture = new THREE.Texture(image)
-
-image.onload = () =>
+const loadigManager = new THREE.LoadingManager()
+loadigManager.onStart = () => 
 {
-    texture.needsUpdate = true
+    console.log('onStart');
 }
 
-image.src = '/textures/door/color.jpg'
+loadigManager.onLoad = () => 
+{
+    console.log('onLoad');
+}
+loadigManager.onProgress = () => 
+{
+    console.log('onProgress');
+}
+loadigManager.onError = () => 
+{
+    console.log('onError');
+}
+const textureLoader = new THREE.TextureLoader(loadigManager)
+const colorTexture = textureLoader.load('./textures/door/color.jpg');
+const alphaTexture = textureLoader.load('./textures/door/alpha.jpg');
+const heightTexture = textureLoader.load('./textures/door/height.jpg');
+const normalTexture = textureLoader.load('./textures/door/normal.jpg');
+const ambientOcclusionTexture = textureLoader.load('./textures/door/ambientOcclusion.jpg');
+const metalnessTexture = textureLoader.load('./textures/door/metalness.jpg');
+const roughnessTexture = textureLoader.load('./textures/door/roughness.jpg');
 
 
 
@@ -33,7 +50,7 @@ const scene = new THREE.Scene()
  * Object
  */
 const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ map: texture })
+const material = new THREE.MeshBasicMaterial({ map: colorTexture })
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
