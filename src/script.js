@@ -1,31 +1,32 @@
 import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { Color } from 'three'
 
 
 /** 
  * Textures 
  */
 const loadigManager = new THREE.LoadingManager()
-loadigManager.onStart = () => 
-{
-    console.log('onStart');
-}
+// loadigManager.onStart = () => 
+// {
+//     console.log('onStart');
+// }
 
-loadigManager.onLoad = () => 
-{
-    console.log('onLoad');
-}
-loadigManager.onProgress = () => 
-{
-    console.log('onProgress');
-}
-loadigManager.onError = () => 
-{
-    console.log('onError');
-}
+// loadigManager.onLoad = () => 
+// {
+//     console.log('onLoad');
+// }
+// loadigManager.onProgress = () => 
+// {
+//     console.log('onProgress');
+// }
+// loadigManager.onError = () => 
+// {
+//     console.log('onError');
+// }
 const textureLoader = new THREE.TextureLoader(loadigManager)
-const colorTexture = textureLoader.load('./textures/door/color.jpg');
+const colorTexture = textureLoader.load('/textures/checkerboard-1024x1024.png')
 const alphaTexture = textureLoader.load('./textures/door/alpha.jpg');
 const heightTexture = textureLoader.load('./textures/door/height.jpg');
 const normalTexture = textureLoader.load('./textures/door/normal.jpg');
@@ -33,7 +34,19 @@ const ambientOcclusionTexture = textureLoader.load('./textures/door/ambientOcclu
 const metalnessTexture = textureLoader.load('./textures/door/metalness.jpg');
 const roughnessTexture = textureLoader.load('./textures/door/roughness.jpg');
 
+// colorTexture.repeat.x = 2
+// colorTexture.repeat.y = 3
 
+// colorTexture.offset.x = 0.5
+// colorTexture.offset.y = 0.5
+
+// colorTexture.rotation = Math.PI * 0.15
+
+// colorTexture.wrapS = THREE.MirroredRepeatWrapping
+// colorTexture.wrapT = THREE.RepeatWrapping
+
+
+colorTexture.minFilter = THREE.LinearFilter 
 
 
 
@@ -50,7 +63,8 @@ const scene = new THREE.Scene()
  * Object
  */
 const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ map: colorTexture })
+console.log(geometry.attributes.uv);
+const material = new THREE.MeshBasicMaterial({ map: colorTexture})
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
